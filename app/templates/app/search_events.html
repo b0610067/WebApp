@@ -4,66 +4,17 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="/">Event Organiser</a></li>
-        <li><a href="/archive_events">Archive old events</a></li>
+        <li class="item-bar"><a href="/">Event Organiser</a></li>
+        <li class="item-bar"><a href="/archive_events">Archive old events</a></li>
       </ul>
     </div>
+  </div>
+</div>
 <!-- ================================================================================ -->
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <h1 class="page-header">Event Organiser</h1>
 
-      <div class= "th-wrapper">
-      <h3 class="sub-header">Create new event</h3>
-      </div>
-      <div class="table-responsive">
-        <form action="/add_record" method="post">
-        {% csrf_token %}
-          <table class="table table-striped">
-          <col style="width:15%">
-          <col style="width:18%">
-          <col style="width:35%">
-          <col style="width:7%">
-            <thead>
-               <tr>
-                <th>Event date</th>
-                <th>Event title</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-             {% for field in record_form %}
-                <td>{{field}}</td>
-             {% endfor %}
-             <td><input type="submit" class="btn show-new-item" value="Create"/></td>
-              </tr>
-            </tbody>
-          </table>
-
-        </form>
-      </div>
-      <div class= "th-wrapper">
-       <h3 class="sub-header">Search event</h3>
-      </div>
-      <div class="table-responsive">
-        <form action="/search_record" method="post">
-        {% csrf_token %}
-          <table class="table table-striped">
-          <col style="width:15%">
-          <col style="width:65%">
-          <col style="width:7%">
-
-               <tr>
-                <th>Event title</th>
-                <td><input type="text" name="title"></td>
-                <td><input type="submit" class="btn show-new-item" value="Search"/></td>
-              </tr>
-
-          </table>
-
-        </form>
-      </div>
-      <h3 class="sub-header">Events</h3>
+      <h3 class="sub-header">Archive old events</h3>
       <div class="table-responsive">
         <table class="table table-striped">
           <col style="width:15%">
@@ -88,8 +39,6 @@
               <td>{{ record.date | date:"Y-m-d" }}</td>
               <td>{{ record.title }}</td>
               <td>{{ record.description }}</td>
-<!--               <td>{{ record.cash }}</td>
-              <td>{{ record.balance_type }}</td> -->
               <td>
                 <form method="post" action="/edit_record">
                   {% csrf_token %}
@@ -111,16 +60,13 @@
                   <input type="submit" class="btn" value="Archive">
                 </form>
               </td>
-              <form method="post" action="/share_record">
-                {% csrf_token %}
-                <td>
-                    <input type="hidden" value="{{ record.id }}" name="share_val">
-                    <input type="submit" class="btn" value="Share to">
-                </td>
-                <td>
-                    {{user_form.user}}
-                </td>
-            </form>
+              <td>
+                <form method="post" action="/share_record">
+                  {% csrf_token %}
+                  <input type="hidden" value="{{ record.id }}" name="share_val">
+                  <input type="submit" class="btn" value="Share">
+                </form>
+              </td>
             </tr>
             {% endfor %}
           </tbody>

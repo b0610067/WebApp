@@ -1,0 +1,62 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a href="/">Event Organiser</a></li>
+        <li class="active"><a href="/archive_events">Archive old events</a></li>
+      </ul>
+    </div>
+<!-- ================================================================================ -->
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h1 class="page-header">Event Organiser</h1>
+
+      <h3 class="sub-header">Archive old events</h3>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <col style="width:15%">
+          <col style="width:18%">
+          <col style="width:35%">
+          <col style="width:7%">
+          <col style="width:7%">
+          <col style="width:7%">
+          <thead>
+            <tr>
+              <th>Event date</th>
+              <th>Event title</th>
+              <th>Description</th>
+<!--               <th>金額</th>
+              <th>收/支</th> -->
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+            <tr>
+              <td>{{ record.date | date:"Y-m-d" }}</td>
+              <td>{{ record.title }}</td>
+              <td>{{ record.description }}</td>
+              <td>
+                <form method="post" action="/edit_record">
+                  {% csrf_token %}
+                  <input type="hidden" value="{{ record.id }}" name="edit_val">
+                  <input type="submit" class="btn" value="Edit">
+                </form>
+              </td>
+              <td>
+                <form method="post" action="/delete_record">
+                  {% csrf_token %}
+                  <input type="hidden" value="{{ record.id }}" name="delete_val">
+                  <input type="submit" class="btn" value="Delete">
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

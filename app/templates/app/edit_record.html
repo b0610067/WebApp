@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="item-bar"><a href="/">Event Organiser</a></li>
+        <li class="item-bar"><a href="/archive_events">Archive old events</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- ================================================================================ -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h3 class="page-header">Edit event</h3>
+  <table >
+  <form method="post" action="/update_record">
+  {% csrf_token %}
+   <tr>
+    <th>Event date</th>
+    <td><input type="text" name="date" value={{record.date| date:"Y-m-d" }}></td>
+  </tr>
+   <tr>
+    <th>Event title</th>
+    <td><input type="text" name="title" value={{record.title}}></td>
+  </tr>
+   <tr>
+    <th>Description</th>
+    <td><input type="text" name="description" value={{record.description}}></td>
+  </tr>
+
+  <tr>
+      <td></td>
+      <td>
+          <input type="hidden" value="{{ record.id }}" name="id_val">
+          <input type="submit" value="Save" class="btn small-button" />
+      </td>
+    </form>
+  </tr>
+  </table>
+</div>
+{% endblock %}
+
